@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One JavaScript Showcase</title>
+    <style>
+        body {
+            background-color: black;
+            color: antiquewhite;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: grid;
+            margin: 20%;
+            grid-template-columns: repeat(5, 200px);
+            grid-template-rows: repeat(4, 200px);
+        }
+        .box {
+            color: rgb(255, 255, 255);
+            font-size: 20px;
+            font-weight: bold;
+            font-style: bold;
+            text-align: center;
+            border-width: 2px;
+            border-radius: 8px;
+            border-style: solid;
+            border-color: rgb(255, 255, 255);
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .box:hover {
+            background-color: rgba(255, 255, 255, 0.242);
+            transition: 0.8s ease-in-out, color 1.1s ease-in-out;
+        }
+        #box1 {
+            grid-column-start: 1;
+            grid-column-end: 5;
+        }
+        #box2 {
+            grid-row-start: 2;
+            grid-row-end: 4;
+        }
+        #box3 {
+            grid-column-start: 2;
+            grid-column-end: 5;
+        }
+        #box4 {
+            grid-column-start: 2;
+            grid-column-end: 4;
+        }
+        #box5 {
+            grid-column-start: 4;
+            grid-column-end: 5;
+        }
+        #box6 {
+            grid-column-start: 1;
+            grid-column-end: 5;
+        }
+        .section-divider {
+            text-align: center;
+            margin: 40px auto;
+            border-bottom: 2px solid white;
+            padding-bottom: 20px;
+            width: 80%;
+        }
+        h1, h2, p {
+            text-align: center;
+        }
+        #event-listener-section img {
+            display: block;
+            margin: 20px auto;
+            height: 150px;
+            width: 300px;
+        }
+        #btn-event, #btn-dom {
+            background-color: rgba(0, 0, 0, 0.29);
+            color: white;
+            font-size: 20px;
+            font-family: cursive;
+            font-weight: bold;
+            border: 5px solid white;
+            border-radius: 3px;
+            padding: 10px 20px;
+            display: block;
+            margin: 10px auto;
+            cursor: pointer;
+        }
+        .game-main {
+            border-radius: 5px;
+            padding: 40px 0;
+            width: 80%;
+            margin: auto;
+        }
+        .game-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .game-btn-group button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 2px solid white;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="section-divider">
+        <h1>CSS Grid Layout</h1>
+    </div>
+    <div class="container">
+        <div class="box" id="box1">ONE</div>
+        <div class="box" id="box2">TWO</div>
+        <div class="box" id="box3">THREE</div>
+        <div class="box" id="box4">FOUR</div>
+        <div class="box" id="box5">FIVE</div>
+        <div class="box" id="box6">SIX</div>
+    </div>
+    <div class="section-divider">
+        <h1>DOM Manipulation</h1>
+        <p id="txt">OLD MESSAGE ::</p>
+        </div>
+    <div class="section-divider" id="event-listener-section">
+        <h1>Event Listener</h1>
+        <p id="new">HELLO</p>
+        <button id="btn-event">CLICK TO CHANGE</button>
+        <img src="https://media.licdn.com/dms/image/v2/D4E12AQFfe1nZbaWdMw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1698604163003?e=2147483647&v=beta&t=zrcrB8lfoVmZo0LcSLgut3A_4PwE6YFe9EK3iy17L2Y" alt="JS Image">
+    </div>
+    <div class="section-divider">
+        <div class="game-main">
+            <h1>Stone Paper Scissors</h1>
+            <p>Choose any one:</p>
+            <div class="game-btn-group">
+                <button onclick="plays('stone')">Stone</button>
+                <button onclick="plays('paper')">Paper</button>
+                <button onclick="plays('scissors')">Scissors</button>
+            </div>
+            <p id="result"></p>
+        </div>
+    </div>
+
+    <script>
+
+          // DOM
+        const p = document.getElementById("txt");
+        const btnDom = document.createElement("button");
+        btnDom.innerText = "CLICK TO CHANGE (DOM)";
+        btnDom.id = "btn-dom";
+        p.insertAdjacentElement('afterend', btnDom); // Insert button after the paragraph
+        
+        btnDom.addEventListener('click', () => {
+            p.innerText = "NEW MESSAGE :: Changed via DOM!";
+            p.style.color = 'lightgreen';
+        });
+
+        // Event listener 
+
+        document.getElementById('btn-event').addEventListener('click', function() {
+            const newEl = document.getElementById("new");
+            newEl.innerHTML = "WELCOME TO JS";
+            newEl.style.color = "red";
+            newEl.style.backgroundColor = "white";
+            newEl.style.textAlign = "center";
+            newEl.style.fontSize = "40px";
+            newEl.style.fontFamily = "cursive";
+            alert("YOU HAVE CLICKED THE BUTTON");
+        });
+
+        // rock,paper,sissors
+
+        const options = ['stone', 'paper', 'scissors'];
+        function plays(userChoice) {
+            const computerChoice = options[Math.floor(Math.random() * 3)];
+            let message = `Your choice: <strong>${userChoice}</strong> | Computer choice: <strong>${computerChoice}</strong><br>`;
+            
+            if (userChoice === computerChoice) {
+                message += "It's a Tie!";
+            } else if (
+                (userChoice === "stone" && computerChoice === "scissors") ||
+                (userChoice === "scissors" && computerChoice === "paper") ||
+                (userChoice === "paper" && computerChoice === "stone")
+            ) {
+                message += "You Win!";
+            } else {
+                message += "You Lose!";
+            }
+            document.getElementById("result").innerHTML = message;
+        }
+    </script>
+
+     // async await 
+    <script>
+        console.log("Runnin");
+        async function fetchUser() {
+            try {
+                const res = await fetch("");
+                const user = await res.json();
+                console.log("Name:", user.name);
+            } catch (err) {
+                console.error("eror", err);
+            }
+        }
+        fetchUser();
+    </script>
+    
+     // fetch then
+
+    <script>
+        console.log("Running");
+        fetch("")
+            .then(response => response.json())
+            .then(data => console.log("Title:", data.title))
+            .catch(error => console.error("error", error));
+    </script>
+
+    // filter.js
+    
+    <script>
+        console.log("Running");
+        const numbers_filter = [1, 2, 3, 4, 5];
+        const evenNumbers = numbers_filter.filter(num => num % 2 === 0);
+        console.log("even num:", evenNumbers);
+    </script>
+
+
+   // map.js
+    <script>
+        console.log("Running");
+        const numbers_map = [1, 2, 3, 4, 5];
+        const squared = numbers_map.map(num => num * num);
+        console.log("sqrd num", squared);
+    </script>
+    
+//promise.js
+
+    <script>
+        console.log("Running");
+        const myPromise = new Promise((resolve, reject) => {
+            const success = true; 
+            setTimeout(() => {
+                if (success) resolve("Resolved");
+                else reject("Rejected");
+            }, 1000);
+        });
+        myPromise
+            .then(result => console.log("THEN", result))
+            .catch(error => console.error("CATCH", error))
+            .finally(() => console.log("Done"));
+    </script>
+
+
+     //reduce.js
+    <script>
+        console.log("Running");
+        const numbers_reduce = [1, 2, 3, 4, 5];
+        const sum = numbers_reduce.reduce((acc, curr) => acc + curr, 0);
+        console.log("REDUCE -> Sum of Numbers:", sum);
+    </script>
+
+
+    //rest-optr.js
+    <script>
+        console.log("Running");
+        function showNames(...names) {
+            console.log("Names", names);
+        }
+        showNames("Virat", "Rohit", "Gill");
+    </script>
+
+    //spread-optr
+
+    <script>
+        console.log("Running");
+        const arr1 = [1, 2, 3];
+        const arr2 = [4, 5];
+        const combined = [...arr1, ...arr2];
+        console.log("Array:", combined);
+        const person = { name: "Rithik", age: 19 };
+        const updatedPerson = { ...person, country: "India" };
+        console.log("Updated", updatedPerson);
+    </script>
+</body>
+</html>
